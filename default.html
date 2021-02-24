@@ -67,7 +67,9 @@
 
             return jsonObject;
         };
-
+            var colRed = [];
+            var colGreen = [];
+            var gear = [];
         function safetyCheck(){
             var obj = getData();
             //console.log(obj[0].kind)
@@ -86,14 +88,20 @@
                 if((obj[i].kind === "maintenance_performed") && (dayDiff >= 30)){
                     //console.log(obj[i].location);
                     //change block to gear logo
+                    gear.push(obj[i].location);
+
                 }
                 if((obj[i].kind === "maintenance_performed") && (dayDiff < 30)){
                     //console.log(obj[i].location);
                     //change block to green
+                    colGreen.push(obj[i].location);
+
                 }
                 if ((obj[i].kind === "dino_location_updated")){
                     //console.log(obj[i].location);
                     //change block to red
+                    colRed.push(obj[i].location);
+
                 }
             }
             //console.log(obj[i]);
