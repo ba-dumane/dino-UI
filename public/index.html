@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Dino Park</title>
+<link href="style.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<!--google fonts-->
+<link href='//fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+<script src="js/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+<!---header start here-->
+<h1>Dino Park</h1>
+<div class="soccer">
+		<div class="header-top">
+			<script>
+				function generate_table() {
+						// get the reference for the body
+						var body = document.getElementsByTagName("body")[0];
+		
+						// creates a <table> element and a <tbody> element
+						var tbl = document.createElement("table");
+						var tblBody = document.createElement("tbody");
+		
+						// creating all cells
+						for (var i = 1; i < 17; i++) {
+							// creates a table row
+							var row = document.createElement("tr");
+		
+							for (var j = 0; j < 26; j++) {
+								var letter = String.fromCharCode(65 + j);
+								// Create a <td> element and a text node, make the text
+								// node the contents of the <td>, and put the <td> at
+								// the end of the table row
+								var cell = document.createElement("td");
+								var cellText = document.createTextNode((letter+i));
+								cell.appendChild(cellText);
+								row.appendChild(cell);
+							}
+		
+							// add the row to the end of the table body
+							tblBody.appendChild(row);
+						}
+		
+						// put the <tbody> in the <table>
+						tbl.appendChild(tblBody);
+						// appends <table> into <body>
+						body.appendChild(tbl);
+						// sets the border attribute of tbl to 2;
+						tbl.setAttribute("border", "2");
+					}
+				generate_table();
+		
+		
+				// The following code gets the data from NUDLS
+				function getData() {
+		
+					var req = new XMLHttpRequest();
+					req.open("GET","https://dinoparks.net/nudls/feed" , false);
+					req.send(null);
+					var jsonObject = JSON.parse(req.responseText);
+		
+					return jsonObject;
+				};
+		
+		
+					var obj = getData();            
+					var objLen = obj.length;
+		
+					var today = new Date();
+					var dd = String(today.getDate()).padStart(2, '0');
+					var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+					var yyyy = today.getFullYear();
+					today = mm + '-' + dd + '-' + yyyy;
+		
+					let colRed = [];
+					var colGreen = [];
+					var gear = [];
+					for(let i = 0; i < objLen; i ++ ){
+						var date = new Date((obj[i].time.substring(0, 10)));
+						timeDiff = new Date(today).getTime() - date;
+						dayDiff = timeDiff / (1000 * 3600 * 24)
+		
+						if((obj[i].kind === "maintenance_performed") && (dayDiff >= 30)){
+		
+							gear.push(obj[i].location);
+						}
+						if((obj[i].kind === "maintenance_performed") && (dayDiff < 30)){
+		
+							colGreen.push(obj[i].location);
+		
+						}
+						if ((obj[i].kind === "dino_location_updated")){
+							colRed.push(obj[i].location);
+						}
+					}
+		
+				
+				var mytable = document.getElementsByTagName("table")[0];
+				var mytablebody = mytable.getElementsByTagName("tbody")[0];
+				for (var r = 0; r < 16; r++) {
+		
+					for (var c = 0; c < 26; c++) {
+		
+						var myrow = mytablebody.getElementsByTagName("tr")[r];
+						var mycel = myrow.getElementsByTagName("td")[c];
+						for (var block in colRed){
+							if(mycel.innerText === colRed[block]){
+								mycel.style.backgroundColor = "red";
+							}
+						}
+						for (var greenblock in colGreen) {
+							if (mycel.innerText === colGreen[greenblock]) {
+								mycel.style.backgroundColor = "#51B687";
+							}
+						}
+						for (var gearblock in gear) {
+							if (mycel.innerText === gear[gearblock]) {
+								mycel.style.backgroundImage = "url(gear-icon.png)";
+							}
+						}
+					}
+				}
+			
+		
+				</script>
+		
+		
+			</div>
+		</div>
+		<!----- tabs-box ---->
+		<!----- Comman-js-files ----->
+		<script>
+			$(document).ready(function() {
+				$("#tab2").hide();
+				$("#tab3").hide();
+				$("#tab4").hide();
+				$(".tabs-menu a").click(function(event){
+					event.preventDefault();
+					var tab=$(this).attr("href");
+					$(".tab-grid").not(tab).css("display","none");
+					$(tab).fadeIn("slow");
+				});
+			});
+		</script>
+		<!----- Comman-js-files ----->
+        </div>
+</div>
+<div class="clear"> </div>
+<div class="copy-right">
+			<p>© Dino Park by <a href="#" target=""> Babalwa Dumane </a></p>
+</div>
+
+</body>
+</html>
+
+
+ 
