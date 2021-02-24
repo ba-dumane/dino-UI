@@ -108,19 +108,19 @@
 
                 var myrow = mytablebody.getElementsByTagName("tr")[r];
                 var mycel = myrow.getElementsByTagName("td")[c];
-                for (var rb in colRed){
-                    if(mycel.innerText === colRed[rb]){
+                for (var block in colRed){
+                    if(mycel.innerText === colRed[block]){
                         mycel.style.backgroundColor = "red";
                     }
                 }
-                for (var gb in colGreen) {
-                    if (mycel.innerText === colGreen[gb]) {
+                for (var greenblock in colGreen) {
+                    if (mycel.innerText === colGreen[greenblock]) {
                         mycel.style.backgroundColor = "#51B687";
                     }
                 }
-                for (var gb in gear) {
-                    if (mycel.innerText === colGreen[gb]) {
-                        mycel.style.background-image : url("#51B687");
+                for (var gearblock in gear) {
+                    if (mycel.innerText === gear[gearblock]) {
+                        mycel.style.backgroundImage = "url(gear-icon.png)";
                     }
                 }
             }
